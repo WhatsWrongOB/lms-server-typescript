@@ -79,3 +79,6 @@ app.use((err: MyError, req: Request, res: Response, next: NextFunction) => {
     message,
   });
 });
+
+
+export default app
