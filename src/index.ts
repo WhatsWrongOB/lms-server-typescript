@@ -10,7 +10,7 @@ import NodeCache from "node-cache";
 
 const app: Application = express();
 
-/* @** Middlewares */
+/* @** Middlewares & Caching*/
 
 dotenv.config();
 app.use(express.json());

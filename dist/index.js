@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import NodeCache from "node-cache";
 /* @** Intializing Express */
 const app = express();
-/* @** Middlewares */
+/* @** Middlewares & Caching*/
 dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
