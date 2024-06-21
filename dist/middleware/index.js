@@ -3,14 +3,16 @@ import User from "../model/index.js";
 /* @ Middleware function to check users authentication */
 const verifyUser = async (req, res, next) => {
     try {
-        const token = req.cookies?.token;
-        if (!token) {
-            throw new Error("Unauthorized ");
-        }
+        const headers = req.headers?.authorization;
+        if (!headers)
+            throw new Error("Unauthorized Access");
+        const token = headers.split(' ')[1];
+        if (!token)
+            throw new Error("oken is missing or malformed");
         const userId = validatetoken(token);
         const user = await User.findById(userId);
         if (!user) {
-            throw new Error("Unauthorized ");
+            throw new Error("Unauthorized Access");
         }
         req.user = user;
         next();

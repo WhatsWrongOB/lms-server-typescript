@@ -14,18 +14,20 @@ const verifyUser = async (
   next: NextFunction
 ) => {
   try {
-    const token = req.cookies?.token;
+    const headers = req.headers?.authorization;
 
-    if (!token) {
-      throw new Error("Unauthorized ");
-    }
+    if (!headers) throw new Error("Unauthorized Access");
+
+    const token = headers.split(' ')[1]
+
+    if (!token) throw new Error("oken is missing or malformed")
 
     const userId = validatetoken(token);
 
     const user = await User.findById(userId);
 
     if (!user) {
-      throw new Error("Unauthorized ");
+      throw new Error("Unauthorized Access");
     }
 
     req.user = user;

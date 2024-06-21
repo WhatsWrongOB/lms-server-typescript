@@ -88,7 +88,7 @@ const login = async (req, res, next) => {
             throw new Error("Invalid Credentials");
         }
         const token = generateToken(user._id);
-        return res.cookie("token", token, { httpOnly: true }).status(200).json({
+        return res.status(200).json({
             success: true,
             message: "Login Succesfully",
             token,
@@ -188,12 +188,7 @@ const updatePassword = async (req, res, next) => {
 /* @ Logout Handler [ Get Requst ] /api/logout */
 const logout = async (req, res, next) => {
     try {
-        return res
-            .clearCookie("token", {
-            httpOnly: true,
-        })
-            .status(200)
-            .json({
+        return res.status(200).json({
             success: true,
             message: "Logout Successfull",
         });

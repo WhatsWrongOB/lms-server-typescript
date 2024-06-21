@@ -128,7 +128,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 
     const token = generateToken(user._id);
 
-    return res.cookie("token", token, { httpOnly: true }).status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Login Succesfully",
       token,
@@ -266,20 +266,14 @@ const updatePassword = async (
 };
 
 
-
 /* @ Logout Handler [ Get Requst ] /api/logout */
 
 const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    return res
-      .clearCookie("token", {
-        httpOnly: true,
-      })
-      .status(200)
-      .json({
-        success: true,
-        message: "Logout Successfull",
-      });
+    return res.status(200).json({
+      success: true,
+      message: "Logout Successfull",
+    });
   } catch (error) {
     next(error);
   }
