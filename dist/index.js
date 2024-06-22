@@ -2,9 +2,10 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import router from "./routes/index.js";
+import router from "./routes/auth.js";
 import cookieParser from "cookie-parser";
 import NodeCache from "node-cache";
+import feedbackRouter from "./routes/feedback.js";
 /* @** Intializing Express */
 const app = express();
 /* @** Middlewares & Caching*/
@@ -36,6 +37,7 @@ app.get("/", (req, res) => {
     res.send("Lets Begin The Development!");
 });
 app.use("/api", router);
+app.use("/api", feedbackRouter);
 /* @** Mongo connection & Server */
 const PORT = process.env.PORT || 5000;
 mongoose

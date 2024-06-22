@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { validatetoken } from "../util/index.js";
-import User, { UserData } from "../model/index.js";
+import User from "../model/user.js";
+import { AuthRequest } from "../types/index.js";
 
-interface AuthRequest extends Request {
-  user?: UserData;
-}
 
 /* @ Middleware function to check users authentication */
 

@@ -1,5 +1,5 @@
 import { validatetoken } from "../util/index.js";
-import User from "../model/index.js";
+import User from "../model/user.js";
 /* @ Middleware function to check users authentication */
 const verifyUser = async (req, res, next) => {
     try {

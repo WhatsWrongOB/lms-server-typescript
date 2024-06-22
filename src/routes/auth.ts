@@ -8,7 +8,7 @@ import {
   resetPassword,
   updatePassword,
   verifyEmail,
-} from "../controller/index.js";
+} from "../controller/auth.js";
 import { verifyUser, verifyUserIsAdmin } from "../middleware/index.js";
 
 const router = express.Router();

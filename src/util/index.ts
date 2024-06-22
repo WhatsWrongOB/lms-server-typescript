@@ -2,17 +2,8 @@ import nodemailer from "nodemailer";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import { DecodedTokenPayload, Message } from "../types";
 
-interface Message {
-  email: string;
-  subject: string;
-  text: string;
-  html: string;
-}
-
-interface DecodedTokenPayload {
-  id: string;
-}
 
 /* @ Send mail { NodeMailer } */
 

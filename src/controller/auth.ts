@@ -1,5 +1,5 @@
 import { Response, Request, NextFunction } from "express";
-import User from "../model/index.js";
+import User from "../model/user.js";
 import {
   comparePassword,
   generateResetToken,
@@ -8,7 +8,7 @@ import {
   sendMail,
 } from "../util/index.js";
 import { myCache } from "../index.js";
-import { UserData } from "../model/index.js";
+import { UserData } from "../types/index.js";
 
 /* @ Get Users Handler [ Get Requst ] /api/users */
 
@@ -64,6 +64,8 @@ const registerUser = async (
     };
 
     await sendMail(message);
+
+    myCache.del("Users");
 
     return res.status(200).json({
       success: true,

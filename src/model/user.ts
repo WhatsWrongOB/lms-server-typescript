@@ -1,17 +1,6 @@
-import { Document, Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
+import { UserData } from "../types";
 
-export interface UserData extends Document {
-  username: string;
-  email: string;
-  password: string;
-  department: string;
-  profilePicture: string
-  isAdmin: boolean;
-  isVerified: boolean;
-  verificationToken?: string;
-  resetPasswordToken?: string;
-  resetPasswordExpire?: Date;
-}
 
 const userSchema: Schema<UserData> = new Schema({
   username: {
