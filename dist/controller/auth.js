@@ -1,4 +1,4 @@
-import User from "../model/index.js";
+import User from "../model/user.js";
 import { comparePassword, generateResetToken, generateToken, hashPassword, sendMail, } from "../util/index.js";
 import { myCache } from "../index.js";
 /* @ Get Users Handler [ Get Requst ] /api/users */
@@ -40,6 +40,7 @@ const registerUser = async (req, res, next) => {
             html: `<p>Please verify your email by clicking the link:</p><a href="${verificationLink}">${verificationLink}</a>`,
         };
         await sendMail(message);
+        myCache.del("Users");
         return res.status(200).json({
             success: true,
             message: "Please check your email to verify your account.",
