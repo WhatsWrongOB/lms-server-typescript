@@ -6,6 +6,7 @@ import router from "./routes/auth.js";
 import cookieParser from "cookie-parser";
 import NodeCache from "node-cache";
 import feedbackRouter from "./routes/feedback.js";
+import complainRouter from "./routes/complain.js";
 /* @** Intializing Express */
 const app = express();
 /* @** Middlewares & Caching*/
@@ -38,6 +39,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api", router);
 app.use("/api", feedbackRouter);
+app.use("/api", complainRouter);
 /* @** Mongo connection & Server */
 const PORT = process.env.PORT || 5000;
 mongoose

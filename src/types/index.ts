@@ -34,6 +34,13 @@ export interface FeedbackData extends Document {
   user: Types.ObjectId;
 }
 
+export interface ComplainData extends Document {
+  topic: string;
+  description: string;
+  file?: string;
+  user: Types.ObjectId;
+}
+
 export interface AuthRequest extends Request {
   user?: UserData;
 }
