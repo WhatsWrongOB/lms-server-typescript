@@ -8,7 +8,7 @@ import {
   sendMail,
 } from "../util/index.js";
 import { myCache } from "../index.js";
-import { UserData } from "../types/index.js";
+import { AuthRequest, UserData } from "../types/index.js";
 
 /* @ Get Users Handler [ Get Requst ] /api/users */
 
@@ -281,6 +281,38 @@ const logout = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+
+
+const updateProfile = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+
+    const id = req.user?.id;
+    const { username, department, profilePicture } = req.body;
+
+    const user = await User.findByIdAndUpdate(id, { username, department, profilePicture }, { new: true })
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated Successfully",
+      user: {
+        id: user?._id,
+        email: user?.email,
+        username: user?.username,
+        department: user?.department,
+        isAdmin: user?.isAdmin,
+        profilePicture: user?.profilePicture
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 export {
   registerUser,
   login,
@@ -290,4 +322,5 @@ export {
   verifyEmail,
   getUser,
   logout,
+  updateProfile
 };

@@ -8,6 +8,7 @@ import {
   resetPassword,
   updatePassword,
   verifyEmail,
+  updateProfile
 } from "../controller/auth.js";
 import { verifyUser, verifyUserIsAdmin } from "../middleware/index.js";
 
@@ -21,5 +22,6 @@ router.post("/forget-password", forgetPassword);
 router.post("/reset-password", resetPassword);
 router.post("/verify-email", verifyEmail);
 router.post("/update-password/:id", verifyUser, updatePassword);
+router.patch("/update-profile", verifyUser, updateProfile);
 
 export default router;

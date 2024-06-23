@@ -198,4 +198,26 @@ const logout = async (req, res, next) => {
         next(error);
     }
 };
-export { registerUser, login, forgetPassword, resetPassword, updatePassword, verifyEmail, getUser, logout, };
+const updateProfile = async (req, res, next) => {
+    try {
+        const id = req.user?.id;
+        const { username, department, profilePicture } = req.body;
+        const user = await User.findByIdAndUpdate(id, { username, department, profilePicture }, { new: true });
+        return res.status(200).json({
+            success: true,
+            message: "Profile updated Successfully",
+            user: {
+                id: user?._id,
+                email: user?.email,
+                username: user?.username,
+                department: user?.department,
+                isAdmin: user?.isAdmin,
+                profilePicture: user?.profilePicture
+            }
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+};
+export { registerUser, login, forgetPassword, resetPassword, updatePassword, verifyEmail, getUser, logout, updateProfile };
