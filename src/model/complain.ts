@@ -4,7 +4,7 @@ import { Schema, model } from "mongoose";
 import { ComplainData } from "../types/index.js";
 
 
-const complainSchema: Schema<ComplainData> = new Schema({
+const complainSchema = new Schema<ComplainData>({
     topic: {
         type: String,
         required: true,

@@ -44,3 +44,16 @@ export interface ComplainData extends Document {
 export interface AuthRequest extends Request {
   user?: UserData;
 }
+
+export interface CourseData extends Document {
+  courseName: string;
+  courseCode: string;
+  teacherName: string;
+}
+
+export interface AttendanceData {
+  user: Types.ObjectId;
+  course: Types.ObjectId;
+  date: Date;
+  status: "present" | "absent";
+}

@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 import { FeedbackData } from "../types/index.js";
 
 
-const feedbackSchema: Schema<FeedbackData> = new Schema({
+const feedbackSchema = new Schema<FeedbackData> ({
     rating: {
         type: Number,
         required: true,

@@ -7,8 +7,8 @@ import { verifyUser, verifyUserIsAdmin } from "../middleware/index.js";
 
 const feedbackRouter = express.Router();
 
-feedbackRouter.get("/feedback", verifyUser, verifyUserIsAdmin, getAllFeedback);
-feedbackRouter.post("/feedback", verifyUser, createFeedback);
+feedbackRouter.get("/", verifyUser, verifyUserIsAdmin, getAllFeedback);
+feedbackRouter.post("/", verifyUser, createFeedback);
 
 
 export default feedbackRouter;

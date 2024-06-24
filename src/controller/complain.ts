@@ -9,8 +9,8 @@ const getAllComplain = async (req: Request, res: Response, next: NextFunction) =
         let complain: ComplainData[];
 
         if (myCache.has("Complain")) {
-            const cachedcomplain = myCache.get("Complain") as string;
-            complain = JSON.parse(cachedcomplain);
+            const cachedComplain = myCache.get("Complain") as string;
+            complain = JSON.parse(cachedComplain);
         } else {
             complain = await Complain.find().populate('user', 'username').exec();
             myCache.set("Complain", JSON.stringify(complain));

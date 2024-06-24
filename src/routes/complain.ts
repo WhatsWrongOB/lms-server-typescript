@@ -6,8 +6,8 @@ import { verifyUser, verifyUserIsAdmin } from "../middleware/index.js";
 
 const complainRouter = express.Router();
 
-complainRouter.get("/complain", verifyUser, verifyUserIsAdmin, getAllComplain);
-complainRouter.post("/complain", verifyUser, createComplain);
+complainRouter.get("/", verifyUser, verifyUserIsAdmin, getAllComplain);
+complainRouter.post("/", verifyUser, createComplain);
 
 
 export default complainRouter;

@@ -7,6 +7,8 @@ import cookieParser from "cookie-parser";
 import NodeCache from "node-cache";
 import feedbackRouter from "./routes/feedback.js";
 import complainRouter from "./routes/complain.js";
+import courseRouter from "./routes/course.js";
+import attendanceRouter from "./routes/attendance.js";
 
 /* @** Intializing Express */
 
@@ -47,9 +49,13 @@ app.use(
 app.get("/", (req: Request, res: Response) => {
   res.send("Lets Begin The Development!");
 });
+
 app.use("/api", router);
-app.use("/api", feedbackRouter);
-app.use("/api", complainRouter);
+app.use("/api/feedback", feedbackRouter);
+app.use("/api/complain", complainRouter);
+app.use("/api/course", courseRouter)
+app.use("/api/attendance", attendanceRouter)
+
 
 
 /* @** Mongo connection & Server */
@@ -67,6 +73,7 @@ mongoose
   .catch((err: Error) => {
     console.log("Error connecting to MongoDB:", err.message);
   });
+
 
 /* @** Error Middleware */
 

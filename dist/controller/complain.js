@@ -4,8 +4,8 @@ const getAllComplain = async (req, res, next) => {
     try {
         let complain;
         if (myCache.has("Complain")) {
-            const cachedcomplain = myCache.get("Complain");
-            complain = JSON.parse(cachedcomplain);
+            const cachedComplain = myCache.get("Complain");
+            complain = JSON.parse(cachedComplain);
         }
         else {
             complain = await Complain.find().populate('user', 'username').exec();
