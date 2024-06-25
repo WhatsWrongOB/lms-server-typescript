@@ -5,15 +5,6 @@ const markAttendance = async (req, res, next) => {
         if (!attendance || !Array.isArray(attendance)) {
             throw new Error("Invalid input: attendance should be an array of records.");
         }
-        for (const record of attendance) {
-            const { userId, status } = record;
-            if (!userId || !status) {
-                throw new Error("Each record must include userId and status.");
-            }
-            if (status !== "present" && status !== "absent") {
-                throw new Error("Status must be 'present' or 'absent'.");
-            }
-        }
         const markedAttendance = [];
         for (const record of attendance) {
             const { userId, status } = record;

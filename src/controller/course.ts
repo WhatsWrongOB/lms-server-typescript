@@ -13,7 +13,7 @@ const getAllCourse = async (req: Request, res: Response, next: NextFunction) => 
             course = JSON.parse(cachedCourse);
         } else {
             course = await Course.find();
-            myCache.set("Complain", JSON.stringify(course));
+            myCache.set("Course", JSON.stringify(course));
         }
 
         return res.status(200).json({ course });

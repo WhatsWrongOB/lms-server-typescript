@@ -9,7 +9,7 @@ const getAllCourse = async (req, res, next) => {
         }
         else {
             course = await Course.find();
-            myCache.set("Complain", JSON.stringify(course));
+            myCache.set("Course", JSON.stringify(course));
         }
         return res.status(200).json({ course });
     }
