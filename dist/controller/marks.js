@@ -23,15 +23,29 @@ const getStudentCourseMarks = async (req, res, next) => {
         const userId = req.user?._id;
         const cacheKey = `Marks-${userId}-${courseId}`;
         if (myCache.has(cacheKey)) {
-            const cachedMarks = myCache.get(cacheKey);
-            const marks = JSON.parse(cachedMarks);
-            return res.status(200).json({ marks });
+            const cachedData = myCache.get(cacheKey);
+            const { marks, totalAssignmentMarks, totalAcademicsMarks } = JSON.parse(cachedData);
+            return res.status(200).json({ marks, totalAssignmentMarks, totalAcademicsMarks });
         }
         const marks = await Marks.findOne({ user: userId, course: courseId })
             .populate('user course', 'username courseName courseCode')
             .exec();
-        myCache.set(cacheKey, JSON.stringify(marks));
-        return res.status(200).json({ marks });
+        if (!marks) {
+            return res.status(404).json({ message: 'Marks not found' });
+        }
+        let totalAssignmentMarks = 0;
+        marks.assignmentMarks.forEach((item) => {
+            totalAssignmentMarks += Number(item.marks);
+        });
+        let totalAcademicsMarks = totalAssignmentMarks;
+        if (marks.presentationMarks) {
+            totalAcademicsMarks += Number(marks.presentationMarks);
+        }
+        if (marks.midMarks) {
+            totalAcademicsMarks += Number(marks.midMarks);
+        }
+        myCache.set(cacheKey, JSON.stringify({ marks, totalAssignmentMarks, totalAcademicsMarks }));
+        return res.status(200).json({ marks, totalAssignmentMarks, totalAcademicsMarks });
     }
     catch (error) {
         next(error);
