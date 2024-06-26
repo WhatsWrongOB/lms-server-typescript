@@ -21,17 +21,17 @@ const getStudentCourseMarks = async (req, res, next) => {
     try {
         const { courseId } = req.params;
         const userId = req.user?._id;
-        const cacheKey = `Marks-${userId}-${courseId}`;
-        if (myCache.has(cacheKey)) {
-            const cachedData = myCache.get(cacheKey);
-            const { marks, totalAssignmentMarks, totalAcademicsMarks } = JSON.parse(cachedData);
-            return res.status(200).json({ marks, totalAssignmentMarks, totalAcademicsMarks });
-        }
+        // const cacheKey = `Marks-${userId}-${courseId}`;
+        // if (myCache.has(cacheKey)) {
+        //     const cachedData = myCache.get(cacheKey) as string;
+        //     const { marks, totalAssignmentMarks, totalAcademicsMarks } = JSON.parse(cachedData);
+        //     return res.status(200).json({ marks, totalAssignmentMarks, totalAcademicsMarks });
+        // }
         const marks = await Marks.findOne({ user: userId, course: courseId })
             .populate('user course', 'username courseName courseCode')
             .exec();
         if (!marks) {
-            return res.status(404).json({ message: 'Marks not found' });
+            return;
         }
         let totalAssignmentMarks = 0;
         marks.assignmentMarks.forEach((item) => {
@@ -44,8 +44,11 @@ const getStudentCourseMarks = async (req, res, next) => {
         if (marks.midMarks) {
             totalAcademicsMarks += Number(marks.midMarks);
         }
-        myCache.set(cacheKey, JSON.stringify({ marks, totalAssignmentMarks, totalAcademicsMarks }));
-        return res.status(200).json({ marks, totalAssignmentMarks, totalAcademicsMarks });
+        const { assignmentMarks, presentationMarks, midMarks } = marks;
+        // myCache.set(cacheKey, JSON.stringify({ marks , totalAssignmentMarks, totalAcademicsMarks }))
+        return res.status(200).json({
+            assignmentMarks, presentationMarks, midMarks, totalAssignmentMarks, totalAcademicsMarks
+        });
     }
     catch (error) {
         next(error);

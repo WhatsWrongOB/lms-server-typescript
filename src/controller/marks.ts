@@ -29,20 +29,20 @@ const getStudentCourseMarks = async (req: AuthRequest, res: Response, next: Next
         const { courseId } = req.params;
         const userId = req.user?._id;
 
-        const cacheKey = `Marks-${userId}-${courseId}`;
+        // const cacheKey = `Marks-${userId}-${courseId}`;
 
-        if (myCache.has(cacheKey)) {
-            const cachedData = myCache.get(cacheKey) as string;
-            const { marks, totalAssignmentMarks, totalAcademicsMarks } = JSON.parse(cachedData);
-            return res.status(200).json({ marks, totalAssignmentMarks, totalAcademicsMarks });
-        }
+        // if (myCache.has(cacheKey)) {
+        //     const cachedData = myCache.get(cacheKey) as string;
+        //     const { marks, totalAssignmentMarks, totalAcademicsMarks } = JSON.parse(cachedData);
+        //     return res.status(200).json({ marks, totalAssignmentMarks, totalAcademicsMarks });
+        // }
 
         const marks = await Marks.findOne({ user: userId, course: courseId })
             .populate('user course', 'username courseName courseCode')
             .exec();
 
         if (!marks) {
-            return res.status(404).json({ message: 'Marks not found' });
+            return;
         }
 
         let totalAssignmentMarks = 0;
@@ -59,9 +59,13 @@ const getStudentCourseMarks = async (req: AuthRequest, res: Response, next: Next
         }
 
 
-        myCache.set(cacheKey, JSON.stringify({ marks , totalAssignmentMarks, totalAcademicsMarks }))
+        const { assignmentMarks, presentationMarks, midMarks } = marks
 
-        return res.status(200).json({ marks , totalAssignmentMarks, totalAcademicsMarks });
+        // myCache.set(cacheKey, JSON.stringify({ marks , totalAssignmentMarks, totalAcademicsMarks }))
+
+        return res.status(200).json({
+            assignmentMarks, presentationMarks, midMarks, totalAssignmentMarks, totalAcademicsMarks
+        });
     } catch (error) {
         next(error);
     }
