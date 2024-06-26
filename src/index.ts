@@ -9,6 +9,7 @@ import feedbackRouter from "./routes/feedback.js";
 import complainRouter from "./routes/complain.js";
 import courseRouter from "./routes/course.js";
 import attendanceRouter from "./routes/attendance.js";
+import marksRouter from "./routes/marks.js";
 
 /* @** Intializing Express */
 
@@ -55,6 +56,7 @@ app.use("/api/feedback", feedbackRouter);
 app.use("/api/complain", complainRouter);
 app.use("/api/course", courseRouter)
 app.use("/api/attendance", attendanceRouter)
+app.use("/api/marks", marksRouter)
 
 
 

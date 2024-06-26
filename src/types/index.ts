@@ -57,3 +57,13 @@ export interface AttendanceData {
   date: Date;
   status: "present" | "absent";
 }
+
+export interface MarksData extends Document {
+  assignmentMarks: number[],
+  presentationMarks: number
+  midMarks: number
+  course: Types.ObjectId;
+  user: Types.ObjectId;
+}
+
+
