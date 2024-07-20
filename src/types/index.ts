@@ -13,7 +13,6 @@ export interface DecodedTokenPayload {
   id: string;
 }
 
-
 export interface UserData extends Document {
   username: string;
   email: string;
@@ -43,6 +42,7 @@ export interface ComplainData extends Document {
 
 export interface AuthRequest extends Request {
   user?: UserData;
+  file?: File;
 }
 
 export interface CourseData extends Document {

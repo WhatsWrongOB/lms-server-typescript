@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import router from "./routes/auth.js";
 import cookieParser from "cookie-parser";
 import NodeCache from "node-cache";
+import cloudinary from "cloudinary"
 import feedbackRouter from "./routes/feedback.js";
 import complainRouter from "./routes/complain.js";
 import courseRouter from "./routes/course.js";
@@ -18,9 +19,17 @@ const app: Application = express();
 /* @** Middlewares & Caching*/
 
 dotenv.config();
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 export const myCache = new NodeCache()
+
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 
 /* @** CORS configuration */
 

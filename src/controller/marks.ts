@@ -29,17 +29,7 @@ const getStudentCourseMarks = async (req: AuthRequest, res: Response, next: Next
         const { courseId } = req.params;
         const userId = req.user?._id;
 
-        // const cacheKey = `Marks-${userId}-${courseId}`;
-
-        // if (myCache.has(cacheKey)) {
-        //     const cachedData = myCache.get(cacheKey) as string;
-        //     const { marks, totalAssignmentMarks, totalAcademicsMarks } = JSON.parse(cachedData);
-        //     return res.status(200).json({ marks, totalAssignmentMarks, totalAcademicsMarks });
-        // }
-
         const marks = await Marks.findOne({ user: userId, course: courseId })
-            .populate('user course', 'username courseName courseCode')
-            .exec();
 
         if (!marks) {
             return;
@@ -58,10 +48,8 @@ const getStudentCourseMarks = async (req: AuthRequest, res: Response, next: Next
             totalAcademicsMarks += Number(marks.midMarks);
         }
 
-
         const { assignmentMarks, presentationMarks, midMarks } = marks
 
-        // myCache.set(cacheKey, JSON.stringify({ marks , totalAssignmentMarks, totalAcademicsMarks }))
 
         return res.status(200).json({
             assignmentMarks, presentationMarks, midMarks, totalAssignmentMarks, totalAcademicsMarks
@@ -88,8 +76,6 @@ const createMarks = async (req: AuthRequest, res: Response, next: NextFunction) 
 
             await existingMarks.save();
 
-            myCache.del("Marks");
-
             return res.status(200).json({
                 success: true,
                 message: "Marks updated successfully",
@@ -106,8 +92,6 @@ const createMarks = async (req: AuthRequest, res: Response, next: NextFunction) 
             });
 
             await newMarks.save();
-
-            myCache.del("Marks");
 
             return res.status(201).json({
                 success: true,
